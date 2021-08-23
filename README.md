@@ -107,6 +107,10 @@ fn fetch_an_integer() -> String {
 If you want to develop on the library there are a few commands provided
 by the makefile:
 
+Note: In order to run the tests you'll need `stunnel` installed. Most *nix
+distributions ship with this, but on MacOS you'll need to install it.
+`brew install stunnel` for instance.
+
 To build:
 
     $ make

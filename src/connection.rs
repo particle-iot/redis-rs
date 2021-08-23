@@ -797,6 +797,7 @@ impl Connection {
         };
         // shutdown connection on protocol error
         if let Err(e) = &result {
+            eprintln!("Inside read_response: {:?}", e);
             let shutdown = match e.as_io_error() {
                 Some(e) => e.kind() == io::ErrorKind::UnexpectedEof,
                 None => false,

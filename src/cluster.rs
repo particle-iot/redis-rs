@@ -204,18 +204,25 @@ impl ClusterConnection {
                 _ => panic!("No reach."),
             };
 
-            if let Ok(mut conn) = connect(info.clone(), readonly, password.clone()) {
-                if conn.check_connection() {
-                    connections.insert(addr, conn);
-                    break;
-                }
+            // let mut conn = .unwrap();
+
+            match connect(info.clone(), readonly, password.clone()) {
+                Ok(mut conn) => {
+                    if conn.check_connection() {
+                        connections.insert(addr, conn);
+                        break;
+                    } else {
+                        eprintln!("Check connection failed, not inserting");
+                    }
+                },
+                Err(e) => eprintln!("Connection failure: {:?}", e),
             }
         }
 
         if connections.is_empty() {
             return Err(RedisError::from((
                 ErrorKind::IoError,
-                "It is failed to check startup nodes.",
+                "It failed to check startup nodes.",
             )));
         }
         Ok(connections)
